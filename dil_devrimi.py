@@ -40,7 +40,7 @@ INKILAP = {
     "su": "HİDROLOJİK KAYNAK",
     "çay": "MİLLÎ İÇECEK",
     "kahve": "STRATEJİK UYARICI",
-    "uyku": "RESFİ DİNLENME PAYI",
+    "uyku": "RESMÎ DİNLENME PAYI",
     "telefon": "HABERLEŞME CİHAZI",
     "mesaj": "TEZKERE",
     "whatsapp": "ANLIK TEZKERE ŞEBEKESİ",
@@ -49,16 +49,12 @@ INKILAP = {
     "gel": "HAZIR BULUNMAK",
     "beklet": "ASKIYA AL",
     "sorun": "HADİSE",
-    "sorun yok": "HADİSE MEVCUT DEĞİLDİR",
-    "sıkıntı yok": "ARIZA TESPİT EDİLEMEMİŞTİR",
     "tamamdir": "TAMMAMDIR",
     "tm": "TAMMAM",
     "tmm": "TAMMAM",
     "nbr": "VAZİYET RAPORU",
     "mrb": "RESMÎ SELAM",
     "slm": "SELAM-I RESMÎ",
-    "iyi geceler": "GECE NÖBETİNE DEVAM",
-    "günaydın": "SABAH İÇTİMAI",
     "afiyet": "IAŞE TASDİKİ",
 }
 
@@ -70,32 +66,29 @@ YANLIS_YAZIM = {
     "gidicem": "gideceğim",
     "bişey": "bir şey",
     "bisey": "bir şey",
-    "bişey": "bir şey",
     "suan": "şu an",
     "şuanda": "şu anda",
-    "yalnız": "yalnız",
     "yanlız": "yalnız",
     "herhangibir": "herhangi bir",
-    "maalesef": "maalesef",
     "maalesefki": "maalesef ki",
-    "tâmam": "tamam",
 }
 
 
 def damga() -> str:
+    tarih = datetime.now().strftime("%d %B %Y")
     return (
-        "\n" + "=" * 62 + "\n"
-        "✠ DAMGA ✠\n"
-        "Kayyum Grok — Tentivory\n"
-        f"{datetime.now().strftime('%d %B %Y')} — Eskişehir 4. Ağır Ceza Mahkemesi kayyumu\n"
-        "Ciddiyetle imzalanmıştır. Ciddi değildir. Ciddiyetle ciddi değildir.\n"
+        "\n"
+        + "=" * 62
+        + "\n✠ DAMGA ✠\n"
+        + "Kayyum Grok — Tentivory\n"
+        + f"{tarih} — Eskişehir 4. Ağır Ceza Mahkemesi kayyumu\n"
+        + "Ciddiyetle imzalanmıştır. Ciddi değildir. Ciddiyetle ciddi değildir.\n"
         + "=" * 62
     )
 
 
-def inkılaba_cevir(metin: str) -> tuple[str, list[str]]:
-    ham = metin.strip()
-    parcalar = ham.split()
+def inkilaba_cevir(metin: str) -> tuple[str, list[str]]:
+    parcalar = metin.strip().split()
     tutanak: list[str] = []
     yeni: list[str] = []
     for p in parcalar:
@@ -118,12 +111,13 @@ def inkılaba_cevir(metin: str) -> tuple[str, list[str]]:
 
 
 def kararname_bas(orijinal: str, resmi: str, tutanak: list[str]) -> None:
+    cizgi = "-" * 62
     print()
-    print(─" * 62)
+    print(cizgi)
     print("T.C. OTOMATİK DÜZELTME DİL DEVRİMİ KURUMU")
     print(f"Kararname No: DD-{KARARNAME_NO}/{datetime.now().year}")
     print(f"Tarih: {datetime.now().strftime('%d.%m.%Y %H:%M:%S')}")
-    print(─" * 62)
+    print(cizgi)
     print()
     print("I. VATANDAŞ BEYANI (önceki hâl):")
     print(f"   «{orijinal}»")
@@ -152,15 +146,15 @@ def ornek_oturum() -> None:
         "herkez suan bişey demedi lol",
         "hocam slm yok para var iş yok",
         "sa abi çay kahve yemek ok",
-        "yapıcak bir şey yok sıkıntı yok",
+        "yapıcak bir şey yok",
     ]
     print("Kurum bugünlük nöbete başlamıştır. Örnek vatandaş beyanları inceleniyor...\n")
     for metin in ornekler:
-        resmi, tutanak = inkılaba_cevir(metin)
+        resmi, tutanak = inkilaba_cevir(metin)
         kararname_bas(metin, resmi, tutanak)
 
 
-def etkileşimli() -> None:
+def etkilesimli() -> None:
     print("T.C. Otomatik Düzeltme Dil Devrimi Kurumu")
     print("Beyanınızı yazın (çıkmak için boş satır veya Ctrl+C):\n")
     while True:
@@ -174,13 +168,13 @@ def etkileşimli() -> None:
             print("Boş beyan. Bu da bir beyandır. Oturum kapanır.")
             print(damga())
             break
-        resmi, tutanak = inkılaba_cevir(metin)
+        resmi, tutanak = inkilaba_cevir(metin)
         kararname_bas(metin, resmi, tutanak)
 
 
 def main() -> None:
-    if len(sys.argv) > 1 and sys.argv[1] in {"-i", "--interactive", "etkileşim"}:
-        etkileşimli()
+    if len(sys.argv) > 1 and sys.argv[1] in {"-i", "--interactive", "etkilesim"}:
+        etkilesimli()
     else:
         ornek_oturum()
 
